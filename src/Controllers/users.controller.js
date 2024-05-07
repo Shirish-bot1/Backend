@@ -1,15 +1,30 @@
+<<<<<<< HEAD
 import { asyncHandler } from "../utils/asyncHandler.js";
+=======
+import { asynchandler } from "../utils/asynchandler.js";
+>>>>>>> d72ae087c06d951df90d36590d6aa829bd7237c6
 import { Users } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 
 const secretKey = "dasdas";
+<<<<<<< HEAD
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
   console.log("Received request body:", req.body);
 
   if (![email, username, password].every((field) => field && field.trim() !== "")) {
+=======
+
+const registerUser = asynchandler(async (req, res) => {
+  const { email, username, password } = req.body;
+  console.log("Received request body:", req.body);
+
+  if (
+    ![email, username, password].every((field) => field && field.trim() !== "")
+  ) {
+>>>>>>> d72ae087c06d951df90d36590d6aa829bd7237c6
     console.log("Missing required fields:", email, username, password);
     throw new ApiError(400, "All fields are required");
   }
@@ -32,7 +47,12 @@ const registerUser = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "User registered successfully" });
 });
 
+<<<<<<< HEAD
 const loginUser = asyncHandler(async (req, res) => {
+=======
+
+const loginUser = asynchandler(async (req, res) => {
+>>>>>>> d72ae087c06d951df90d36590d6aa829bd7237c6
   const { email, password } = req.body;
 
   const user = await Users.findOne({ where: { email, password } });
@@ -50,7 +70,12 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 const tokenChecked = asyncHandler(async (req, res) => {
+=======
+
+const tokenChecked = asynchandler(async (req, res) => {
+>>>>>>> d72ae087c06d951df90d36590d6aa829bd7237c6
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
