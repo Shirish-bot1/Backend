@@ -1,14 +1,16 @@
 import Sequelize from "sequelize";
 
-const sequelize = new Sequelize("HumanRS", "postgres", "12345678", {
+const sequelize = new Sequelize("NewDB", "postgres", "12345678", {
   host: "localhost",
   dialect: "postgres",
+  
 });
 
 const dbConnection = async () => {
   try {
     await sequelize.authenticate();
     console.log(`Connect successful `);
+
   } catch (error) {
     console.error("Error connecting to the database:", error);
   }
