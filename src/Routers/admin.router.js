@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { usersDetail,deleteUser,loginAdmin, } from "../src/Controllers/users.controller";
+import { usersDetail,deleteUser,loginAdmin, } from "../src/Controllers/users.controller.js";
 import { adminMiddleware } from "../middlewares/adminmiddleware";
 
 const adminRouter = Router();

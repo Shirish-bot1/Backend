@@ -1,25 +1,22 @@
 import express from "express";
-// import cors from "cors";
-// import cookieParser from "cookie-parser";
-// import { router } from "./Routers/user.router";
-// import { adminRouter } from "./Routers/admin.router";
+import cors from "cors";
+import { router } from "./Routers/user.router.js";
+import cookieParser from "cookie-parser";
+import { registerUser } from "./Controllers/users.controller.js";
 
 const app = express();
 
-// app.use(
-//   cors({
-//     origin: process.env.CORS_ORIGIN,
-//     credentials: true,
-//   })
-// );
+// Middleware
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true,
+}));
+app.use(cookieParser());
+app.use(express.static("public"));
+app.use(express.json({ limit: "16kb" })); // Only use JSON body parser if you expect JSON data
 
-// app.use(express.json({ limit: "16kb" }));
-// app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-// app.use(express.static("public"));
-// app.use(cookieParser());
-
-// app.use("/api/v1", router);
-
-// app.use("/api/v1", adminRouter);
+// Routes
+app.use("/api/v1", router); // Use the router for API versioning
+app.post("/api/v1/users/register", registerUser); // Define the registerUser route
 
 export { app };
