@@ -1,13 +1,11 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Users } from "../models/users.models.js";
 import jwt from "jsonwebtoken";
-<<<<<<< HEAD
-=======
+
 
 const secretKey = "your_secret_key"; 
->>>>>>> d72ae087c06d951df90d36590d6aa829bd7237c6
 
-const secretKey = "your_secret_key"; 
+
 
 const adminMiddleware = asyncHandler(async (req, res, next) => {
   try {
