@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { usersDetail,deleteUser,loginAdmin, } from "../src/Controllers/users.controller.js";
-import { adminMiddleware } from "../middlewares/adminmiddleware";
+import { getUserDetail,deleteUser,updateUser } from "../Controllers/admin.controller.js";
+import { adminMiddleware } from "../middlewares/adminmiddleware.js";
 
-const adminRouter = Router();
-adminRouter.route("/adminlogin").post(loginAdmin);
-adminRouter.route("/userDetail").post(usersDetail);
-adminRouter.route("/delete/:id").delete(deleteUser);
 
-export {adminRouter};
+const Adminrouter = Router();
+
+Adminrouter.post('/admin/login',adminMiddleware);
+
+Adminrouter.get('/admin/users/:userId',getUserDetail);
+Adminrouter.delete('admin/users/:userId',deleteUser);
+Adminrouter.put('/admin/users/:userId',updateUser);
+
+
+export default Adminrouter;
