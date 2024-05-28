@@ -1,4 +1,5 @@
 import express from "express";
+import axios from "axios";
 import cors from "cors";
 import { router } from "./Routers/user.router.js";
 import cookieParser from "cookie-parser";
@@ -13,7 +14,9 @@ import { deleteImage, getImagebyid, getImages, updateImage, uploadImage } from "
 import { router4 } from "./Routers/complain.router.js";
 import { delcomplain, getcomplain, getyourcomplain, registerComplain } from "./Controllers/complain.controller.js";
 import { router5 } from "./Routers/blog.router.js";
-import { uploadblog } from "./Controllers/blog.controller.js";
+import { deleteBlog, getblog, getblogId, updateBlog, uploadblog } from "./Controllers/blog.controller.js";
+import { paymentRouter } from "./Routers/khalti.router.js";
+
 
 const app = express();
 
@@ -58,7 +61,14 @@ app.get("/api/v4/user/complain/:complainId",getyourcomplain);
 //blog router
 app.use("/api/v5",router5);
 app.post("/api/v5/blog",upload,uploadblog);
+app.get("api/v5/blog",getblog);
+app.get("/api/v5/blog/:blogId",getblogId);
+app.put("api/v5/blog/:blogId",updateBlog);
+app.delete("/api/v5/blog/:blogId",deleteBlog);
 
+
+//Donation
+app.use('/api/v7', paymentRouter);
 
 
 
