@@ -1,5 +1,6 @@
 import { error } from "console";
 import { photos } from "../models/photos.models.js";
+import { upload } from "../middlewares/multer.js";
 
 
  const uploadImage = async(req,res)=>{
@@ -43,23 +44,45 @@ import { photos } from "../models/photos.models.js";
       res.status(500).json({ error: error.message });
     }
   };
+
   
   const updateImage = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { title, url } = req.body;
-      const image = await photos.findByPk(id);
-      if (!image) {
-        return res.status(404).json({ error: "Image not found" });
+    upload(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ message: err });
       }
-      image.title = title;
-      image.url = url;
-      await image.save();
-      res.status(200).json(image);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+      
+      const { id } = req.params;
+      console.log("id", id);
+      
+      const { title, url } = req.body;
+      console.log("title and url", title, url);
+      
+      const file = req.file;
+      console.log("file", file);
+      
+      try {
+        const content = await photos.findByPk(id);
+        console.log("imageid", content);
+        
+        if (!content) {
+          return res.status(404).json({ error: "Photo not found" });
+        }
+        
+        content.title = title;
+        content.url = file ? `/uploads/${file.filename}` : url;
+        
+        await content.save();
+        
+        res.status(200).json({ message: "Successfully updated photo" });
+      } catch (error) {
+        console.error("Error updating photo", error);
+        res.status(500).json({ message: "Internal server error" });
+      }
+    });
   };
+  
+
   
   const deleteImage = async (req, res) => {
     try {

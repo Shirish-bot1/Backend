@@ -21,6 +21,10 @@ const Users = sequelize.define("Register", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isAdmin:{
+    type:DataTypes.BOOLEAN,
+    default:false
+  }
 
  
 });

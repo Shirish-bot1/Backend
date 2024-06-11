@@ -2,27 +2,27 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Users } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
-const secretKey = "dasdas";
+const saltRounds = 10;
+
+const secretKey = "Meowmeow";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
-  console.log("Received request body:", req.body);
+  
+  
+  const existingUsersCount = await Users.count();
+  
 
-  if (![email, username, password].every((field) => field && field.trim() !== "")) {
-    console.log("Missing required fields:", email, username, password);
-    throw new ApiError(400, "All fields are required");
-  }
-
-  const existingUser = await Users.findOne({ where: { email: email } });
-  if (existingUser) {
-    throw new ApiError(409, "User with this email already exists");
-  }
-
+  const role = existingUsersCount === 0 ? 'admin' : 'user';
+  
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
   const newUser = await Users.create({
     email: email,
-    password: password,
+    password: hashedPassword,
     username: username.toLowerCase(),
+    role: role, // Assign the role here
   });
 
   if (!newUser) {

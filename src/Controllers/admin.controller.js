@@ -7,31 +7,32 @@ const secretKey ="Meowmeow"
 
 
 const loginAdmin = asyncHandler(async (req, res) => {
+  try{
   const { email, password } = req.body;
 
+  const user = await Users.findOne({ where: { email, password } });
+  console.log("user",user);
 
-  const user = await Users.findOne({ where: { email, password, isAdmin: true } });
-
-  if (!user) {
-    return res.status(401).json({ message: "Invalid email or password" });
+  if (user.isAdmin) {
+    jwt.sign({ user }, secretKey, (err, token) => {
+      if (err) {
+        console.error("Error generating token:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+      res.status(200).json({
+        message: "login Successful",
+        token,
+        isAdmin: user.isAdmin,
+        
+      });
+    });
+  } else {
+    return res.json("unvalid user or password");
   }
-
-  const payload = {
-    id: user.id,
-    email: user.email,
-    isAdmin: user.isAdmin,
-  };
-
-  jwt.sign(payload, secretKey, { expiresIn: "400s" }, (err, token) => {
-    if (err) {
-      console.error("Error generating token:", err);
-      return res.status(500).json({ message: "Internal server error" });
-    }
-    res.status(200).json({ message: "Admin login successful", token });
-  });
+} catch (error) {
+  res.status(500).json("somenthing went wrong");
+}
 });
-
-
 
 const getUserDetail = async (req, res) => {
   try {
@@ -88,4 +89,4 @@ const updateUser = async (req, res) => {
   }
 };
 
- export {getUserDetail,deleteUser,updateUser, loginAdmin};
+ export {getUserDetail,deleteUser,updateUser,loginAdmin}

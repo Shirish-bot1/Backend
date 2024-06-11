@@ -7,6 +7,8 @@ import { booktable } from "./models/books.models.js";
 import { imagetable } from "./models/photos.models.js";
 import { complaintable } from "./models/complain.models.js";
 import { blogtable } from "./models/blog.models.js";
+import { texttable } from "./models/text.model.js";
+
 
 dotenv.config({
   path: "./.env",
@@ -22,6 +24,9 @@ dbConnection()
       imagetable();
       complaintable();
       blogtable();
+      texttable();
+     
+
     });
   })
   .catch((error) => {

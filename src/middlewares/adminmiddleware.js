@@ -1,9 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Users } from "../models/users.models.js";
-import jwt from "jsonwebtoken";
 
 
-const secretKey = "your_secret_key"; 
+
 
 
 
@@ -15,14 +14,13 @@ const adminMiddleware = asyncHandler(async (req, res, next) => {
     const user = await Users.findOne({
       where: { email: email, password: password },
     });
+    console.log("isAdmin:",user.isAdmin)
 
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    if (!user.isAdmin) {
-      return res.status(403).json({ message: "You are not authorized" });
-    }
+    
 
     const id = user.id;
     console.log(id);
