@@ -14,7 +14,6 @@ import { upload } from "../middlewares/multer.js";
             url:`/uploads/${file.filename}`,
             
         });
-        console.log("Image saved to database:", image);
         res.status(201).json(image);
 
 
@@ -53,17 +52,13 @@ import { upload } from "../middlewares/multer.js";
       }
       
       const { id } = req.params;
-      console.log("id", id);
       
       const { title, url } = req.body;
-      console.log("title and url", title, url);
       
       const file = req.file;
-      console.log("file", file);
       
       try {
         const content = await photos.findByPk(id);
-        console.log("imageid", content);
         
         if (!content) {
           return res.status(404).json({ error: "Photo not found" });
@@ -76,7 +71,6 @@ import { upload } from "../middlewares/multer.js";
         
         res.status(200).json({ message: "Successfully updated photo" });
       } catch (error) {
-        console.error("Error updating photo", error);
         res.status(500).json({ message: "Internal server error" });
       }
     });

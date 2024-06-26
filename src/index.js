@@ -8,6 +8,8 @@ import { imagetable } from "./models/photos.models.js";
 import { complaintable } from "./models/complain.models.js";
 import { blogtable } from "./models/blog.models.js";
 import { texttable } from "./models/text.model.js";
+import {  Hometextss } from "./models/Hometext.models.js";
+import { Khaltidonation } from "./models/donation.model.js";
 
 
 dotenv.config({
@@ -25,6 +27,8 @@ dbConnection()
       complaintable();
       blogtable();
       texttable();
+      Hometextss();
+      Khaltidonation();
      
 
     });

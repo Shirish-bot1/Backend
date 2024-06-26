@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+
 const saltRounds = 10;
 
 const secretKey = "Meowmeow";
@@ -22,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email: email,
     password: hashedPassword,
     username: username.toLowerCase(),
-    role: role, // Assign the role here
+    role: role, 
   });
 
   if (!newUser) {

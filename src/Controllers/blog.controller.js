@@ -64,16 +64,16 @@ export const uploadblog = async (req, res) => {
          console.log("blogId",blogId)
          const{title,content}=req.body;
          console.log("title and conent",title,content)
-         const {file} = req.file
+         const {file} = req
          
          const blog = await Blog.findByPk(blogId);
-         console.log("Bookid",blog)
+         console.log("Boologid",blog)
          if(!blog){
             res.status(404).json({error:"Blog Id not found"});
          }
          blog.title=title;;
          blog.content=content;
-         blog.imageUrl = file ? `/uploads/${file.filename}`:file.imageUrl;
+         blog.imageUrl = file ? `/uploads/${file.filename}`:blog.imageUrl;
          
          await blog.save();
          

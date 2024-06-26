@@ -30,11 +30,25 @@ const Donation = sequelize.define('Donation', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  pidx: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   timestamp: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW,
   },
 });
+export const Khaltidonation= async()=>{
+   
+  try {
+    await sequelize.sync({ alter: true });
+    console.log("Khalti donation table created successfully.");
+  } catch (error) {
+    console.error("Error creating Khalti donation table:", error);
+  }
+};
+
 
 export  {Donation};

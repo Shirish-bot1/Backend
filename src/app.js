@@ -24,6 +24,8 @@ import { router11 } from "./Routers/donationpay.router.js";
 import { deleteDonationpay, getAllDonationspay, getDailyDonationspay, getHighestDonorpay, getTotalDonationspay } from "./Controllers/donate.manipu.js";
 import { router12 } from "./Controllers/homepage.router.js";
 import { createHomePhoto,getAllHomePhotos,deleteHomePhoto,updateHomePhoto } from "./Controllers/homepagephoto.js";
+import { router13 } from "./Routers/Hometext.router.js";
+import { createTexts, deleteTexts, getTextByIds, getTexts, updateTexts } from "./Controllers/Hometext.controller.js";
 
 
 
@@ -75,12 +77,13 @@ app.use("/api/v5",router5);
 app.post("/api/v5/blog",upload,uploadblog);
 app.get("api/v5/blog",getblog);
 app.get("/api/v5/blog/:blogId",getblogId);
-app.put("api/v5/blog/:blogId",updateBlog);
+app.put("api/v5/blogs/:blogId",upload,updateBlog);
 app.delete("/api/v5/blog/:blogId",deleteBlog);
 
 
 //Donation
 app.use('/api/v7', paymentRouter);
+
 
 
 //text
@@ -114,7 +117,13 @@ app.get("/api/v12/photos", getAllHomePhotos);
 
 app.delete("/api/v12/photos:id", deleteHomePhoto);
 app.put("/api/v12/photos:id", updateHomePhoto);
-
+//hometext
+app.use("/api/v13",router13);
+app.post("/api/v13/admin/text", createTexts);
+app.get("/api/v13/admin/text", getTexts);
+app.get("/api/v13/admin/text/:textId", getTextByIds);
+app.delete("/api/v13/admin/text/:textId", deleteTexts);
+app.put("/api/v13/admin/text/:textId", updateTexts);
 
 
 
